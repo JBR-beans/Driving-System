@@ -15,4 +15,13 @@ public class GrabbingWheel : UdonSharpBehaviour
     {
 		car.SetProgramVariable("isGrabbingWheel", false);
 	}
+
+    public void OnPickupUseDown()
+    {
+		car.SetProgramVariable("isAccelerating", true);
+	}
+	public void OnPickupUseUp()
+	{
+		car.SetProgramVariable("isAccelerating", false);
+	}
 }

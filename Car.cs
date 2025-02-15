@@ -18,7 +18,10 @@ public class Car : UdonSharpBehaviour
 	public float maxSteerAngle;
 	public float steerReturnSpeed;
 
-	private bool isAccelerating;
+	// set on grab trigger pickup
+	public bool isAccelerating;
+	public bool isReversing;
+
 	private bool isSteering = true;
 	public TextMeshProUGUI steeringdebug;
 	public TextMeshProUGUI motordebug;
@@ -221,6 +224,7 @@ public class Car : UdonSharpBehaviour
 						grabTrigger.transform.localEulerAngles = new Vector3(0, steer_sync, 0);
 						//Debug.Log("amongus");
 					}
+					// if wheel is grabbed
 					else
 					{
 						float angle = grabTrigger.transform.localEulerAngles.y;
@@ -237,6 +241,21 @@ public class Car : UdonSharpBehaviour
 						}
 						steer_sync = angle;
 						
+						if (isAccelerating == true)
+						{
+							if (isReversing == true)
+							{
+								force_sync = -force;
+							} 
+							else
+							{
+								force_sync = force;
+							}
+						}
+						else
+						{
+							force_sync = 0;
+						}
 					}
 					
 					if (steer_sync < 0)
