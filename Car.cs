@@ -147,40 +147,40 @@ public class Car : UdonSharpBehaviour
 					//	{
 					//		steer_sync = maxSteerAngle;
 					//	}
-					}
-					if (isSteering == false)
-					{
-						//foreach (WheelCollider wheel in frontWheels)
-						//{
-						//	if (wheel.steerAngle > 0 && wheel.steerAngle <= maxSteerAngle)
-						//	{
-						//		wheel.steerAngle -= steerAngle;
-						//	}
-						//	if (wheel.steerAngle >= -2 && wheel.steerAngle <= 2)
-						//	{
-						//		wheel.steerAngle = 0;
-						//	}
-						//	if (wheel.steerAngle < 0 && wheel.steerAngle >= -maxSteerAngle)
-						//	{
-						//		wheel.steerAngle += steerAngle;
-						//	}
-						//}
+					//}
+					//if (isSteering == false)
+					//{
+					//	//foreach (WheelCollider wheel in frontWheels)
+					//	//{
+					//	//	if (wheel.steerAngle > 0 && wheel.steerAngle <= maxSteerAngle)
+					//	//	{
+					//	//		wheel.steerAngle -= steerAngle;
+					//	//	}
+					//	//	if (wheel.steerAngle >= -2 && wheel.steerAngle <= 2)
+					//	//	{
+					//	//		wheel.steerAngle = 0;
+					//	//	}
+					//	//	if (wheel.steerAngle < 0 && wheel.steerAngle >= -maxSteerAngle)
+					//	//	{
+					//	//		wheel.steerAngle += steerAngle;
+					//	//	}
+					//	//}
 
-						// sync
+					//	// sync
 
-						if (steer_sync > 0 && steer_sync <= maxSteerAngle)
-						{
-							steer_sync -= steerAngle;
-						}
-						if (steer_sync >= -2 && steer_sync <= 2)
-						{
-							steer_sync = 0;
-						}
-						if (steer_sync < 0 && steer_sync >= -maxSteerAngle)
-						{
-							steer_sync += steerAngle;
-						}
-					}
+					//	if (steer_sync > 0 && steer_sync <= maxSteerAngle)
+					//	{
+					//		steer_sync -= steerAngle;
+					//	}
+					//	if (steer_sync >= -2 && steer_sync <= 2)
+					//	{
+					//		steer_sync = 0;
+					//	}
+					//	if (steer_sync < 0 && steer_sync >= -maxSteerAngle)
+					//	{
+					//		steer_sync += steerAngle;
+					//	}
+					//}
 				}
 				if (DebugMode == true)
 				{
