@@ -10,6 +10,9 @@ public class Car : UdonSharpBehaviour
 	public WheelCollider[] frontWheels;
 	public WheelCollider[] backWheels;
 	public Rigidbody carBody;
+	public Transform steeringWheel;
+	public GameObject grabTrigger;
+
 	public float force;
 	public float steerAngle;
 	public float maxSteerAngle;
@@ -26,6 +29,7 @@ public class Car : UdonSharpBehaviour
 
 	private bool isOwnerVR;
 	private bool DebugMode = true;
+	public bool isGrabbingWheel;
 
 
 	void Start()
@@ -184,17 +188,57 @@ public class Car : UdonSharpBehaviour
 				}
 				if (DebugMode == true)
 				{
+
 					force_sync = Input.GetAxis("Vertical") * force;
+					if (isGrabbingWheel == false)
+					{
+						// button/stick input
+						steer_sync += Input.GetAxis("Horizontal");
+						if (steer_sync < -maxSteerAngle)
+						{
+							steer_sync = -maxSteerAngle;
+						}
+						if (steer_sync > maxSteerAngle)
+						{
+							steer_sync = maxSteerAngle;
+						}
+
+						//if (isSteering == false)
+						//{
+						//	if (steer_sync > 0 && steer_sync <= maxSteerAngle)
+						//	{
+						//		steer_sync += Input.GetAxis("Horizontal");
+						//	}
+						//	if (steer_sync >= -2 && steer_sync <= 2)
+						//	{
+						//		steer_sync = 0;
+						//	}
+						//	if (steer_sync < 0 && steer_sync >= -maxSteerAngle)
+						//	{
+						//		steer_sync += Input.GetAxis("Horizontal");
+						//	}
+						//}
+						grabTrigger.transform.localEulerAngles = new Vector3(0, steer_sync, 0);
+						//Debug.Log("amongus");
+					}
+					else
+					{
+						float angle = grabTrigger.transform.localEulerAngles.y;
+
+						if (angle > 180) angle -= 360;
+						
+						if (angle > maxSteerAngle)
+						{
+							angle = maxSteerAngle;
+						}
+                        if (angle < -maxSteerAngle)
+						{
+							angle = -maxSteerAngle;
+						}
+						steer_sync = angle;
+						
+					}
 					
-					steer_sync += Input.GetAxis("Horizontal");
-					if (steer_sync < -maxSteerAngle)
-					{
-						steer_sync = -maxSteerAngle;
-					}
-					if (steer_sync > maxSteerAngle)
-					{
-						steer_sync = maxSteerAngle;
-					}
 					if (steer_sync < 0)
 					{
 						steer_sync += Time.deltaTime * steerReturnSpeed;
@@ -203,23 +247,6 @@ public class Car : UdonSharpBehaviour
 					{
 						steer_sync += -Time.deltaTime * steerReturnSpeed;
 					}
-
-					if (isSteering == false)
-					{
-						if (steer_sync > 0 && steer_sync <= maxSteerAngle)
-						{
-							steer_sync += Input.GetAxis("Horizontal");
-						}
-						if (steer_sync >= -2 && steer_sync <= 2)
-						{
-							steer_sync = 0;
-						}
-						if (steer_sync < 0 && steer_sync >= -maxSteerAngle)
-						{
-							steer_sync += Input.GetAxis("Horizontal");
-						}
-					}
-					Debug.Log("amongus");
 				}
 
 			}
@@ -236,6 +263,7 @@ public class Car : UdonSharpBehaviour
 		{
 			wheel.motorTorque = force_sync;
 		}
+		//steeringWheel.localEulerAngles = new Vector3(0, steer_sync, 0);
 		steeringdebug.text = frontWheels[0].steerAngle.ToString();
 		motordebug.text = backWheels[0].motorTorque.ToString();
 	}
